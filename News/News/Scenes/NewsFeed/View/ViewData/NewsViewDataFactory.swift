@@ -11,7 +11,8 @@ enum NewsViewDataFactory {
     static func create(from news: News) -> NewsViewData {
         return NewsViewData(
             title: news.title,
-            imageURL: nil
+            text: "Blablabla bla.",
+            imageURL: URL(string: "https://cdn.pixabay.com/photo/2012/08/27/14/19/mountains-55067__340.png")
         )
     }
 }

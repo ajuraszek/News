@@ -10,5 +10,6 @@ import Foundation
 struct NewsViewData: Identifiable {
     let id = UUID()
     let title: String
+    let text: String
     let imageURL: URL?
 }
