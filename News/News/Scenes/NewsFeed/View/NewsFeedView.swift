@@ -10,10 +10,10 @@ import SwiftUI
 struct NewsFeedView: View {
     
     let news: [News] = [
-        .init(title: "breaking news 1"),
-        .init(title: "breaking news 2"),
-        .init(title: "breaking news 3"),
-        .init(title: "breaking news 4")
+//        .init(title: "breaking news 1"),
+//        .init(title: "breaking news 2"),
+//        .init(title: "breaking news 3"),
+//        .init(title: "breaking news 4")
     ]
     
     var newsViewData: [NewsViewData] {
@@ -25,10 +25,15 @@ struct NewsFeedView: View {
             NewsRowView(viewData: viewData)
         }
     }
+    
+    let viewModel: NewsFeedViewModel
+    init(viewModel: NewsFeedViewModel) {
+        self.viewModel = viewModel
+    }
 }
 
 struct NewsFeedView_Previews: PreviewProvider {
     static var previews: some View {
-        NewsFeedView()
+        NewsFeedSceneFactory.create()
     }
 }

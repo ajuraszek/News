@@ -9,4 +9,7 @@ import Foundation
 
 struct News {
     let title: String
+    let info: String
+    let date: Date?
+    let imageUrl: URL?
 }
