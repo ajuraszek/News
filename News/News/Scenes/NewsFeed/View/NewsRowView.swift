@@ -23,25 +23,30 @@ struct NewsRowView: View {
     }
     
     var body: some View {
-        HStack {
-            AsyncImage(
-                url: viewData.imageURL,
-                content: { content in
-                    content.image?
-                        .resizable()
-                        .scaledToFill()
-                }
-            )
-            .frame(width: Constants.imageSize, height: Constants.imageSize, alignment: .center)
-            .clipped()
-            .padding([.leading, .top, .bottom], Constants.leadingTextPadding)
+        VStack(alignment: .leading) {
+            Text(viewData.date)
+                .font(.footnote)
+                .foregroundColor(.gray)
             
-            VStack(alignment: .leading, spacing: Constants.textSpacing) {
-                Text("Let's read: \(viewData.title)")
+            HStack(spacing: 16) {
+                AsyncImage(
+                    url: viewData.imageURL,
+                    content: { content in
+                        content.image?
+                            .resizable()
+                            .scaledToFill()
+                    }
+                )
+                .frame(width: Constants.imageSize, height: Constants.imageSize, alignment: .center)
+                .clipped()
+                
+                Text(viewData.title)
                     .bold()
-                Text(viewData.text)
+                    .lineLimit(2)
             }
             .padding(.all, Constants.leadingTextPadding)
+            Text(viewData.text)
+                .lineLimit(3)
         }
     }
 }

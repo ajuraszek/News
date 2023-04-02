@@ -9,10 +9,20 @@ import Foundation
 
 enum NewsViewDataFactory {
     static func create(from news: News) -> NewsViewData {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd MMM yyyy"
+        var dateText = ""
+        let isoDateFormatter = ISO8601DateFormatter()
+        if
+            let date = news.date,
+            let isoDate = isoDateFormatter.date(from: date) {
+            dateText = dateFormatter.string(from: isoDate)
+        }
         return NewsViewData(
             title: news.title,
-            text: "Blablabla bla.",
-            imageURL: URL(string: "https://cdn.pixabay.com/photo/2012/08/27/14/19/mountains-55067__340.png")
+            text: news.info,
+            date: dateText,
+            imageURL: news.imageUrl
         )
     }
 }

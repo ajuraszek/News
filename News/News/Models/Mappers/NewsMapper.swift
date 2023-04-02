@@ -14,6 +14,7 @@ enum NewsMapper {
     
     private static func map(from response: NewsResponse?) -> News? {
         guard let response else { return nil }
+        
         return News(
             title: response.title ?? "",
             info: response.abstract ?? "",

@@ -11,5 +11,6 @@ struct NewsViewData: Identifiable {
     let id = UUID()
     let title: String
     let text: String
+    let date: String
     let imageURL: URL?
 }

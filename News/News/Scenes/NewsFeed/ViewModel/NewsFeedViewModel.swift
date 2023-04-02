@@ -6,16 +6,23 @@
 //
 
 import Foundation
+import SwiftUI
 
-final class NewsFeedViewModel {
+final class NewsFeedViewModel: ObservableObject {
     
     let api: NetworkAPI
+    private var news: [News] = [] {
+        didSet {
+            newsViewData = news.map { NewsViewDataFactory.create(from: $0) }
+        }
+    }
+    @Published var newsViewData: [NewsViewData] = []
     
     init() {
         api = NetworkAPI(baseURL: NetworkConfiguration.url)
         Task {
-            let containerResponse = try await api.newsData() as? NewsContainerResponse
-            let news = NewsMapper.map(from: containerResponse)
+            let containerResponse: NewsContainerResponse = try await api.fetch()
+            news = NewsMapper.map(from: containerResponse)
             print(news.count)
         }
     }

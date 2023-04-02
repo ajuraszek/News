@@ -20,14 +20,14 @@ final class NetworkAPI {
         self.baseURL = baseURL
     }
     
-    func newsData() async throws -> AnyObject {
+    func fetch<T: Decodable>() async throws -> T {
         // Create Data Task
         let request = URLRequest(url: baseURL)
         let data = try await URLSession.shared.data(for: request)
         return try tryParseData(data: data.0, response: data.1)
     }
     
-    private func tryParseData(data: Data?, response: URLResponse?) throws -> AnyObject {
+    private func tryParseData<T: Decodable>(data: Data?, response: URLResponse?) throws -> T {
         if let data = data, let response = response as? HTTPURLResponse {
             if response.statusCode == 200 {
                 return try parseData(data: data)
@@ -39,8 +39,10 @@ final class NetworkAPI {
         }
     }
     
-    private func parseData(data: Data) throws -> AnyObject {
-        if let object = try? JSONSerialization.jsonObject(with: data, options: []) as AnyObject {
+    private func parseData<T: Decodable>(data: Data) throws -> T {
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        if let object = try? decoder.decode(T.self, from: data) {
             return object
         } else {
             throw DataManagerError.parsingError

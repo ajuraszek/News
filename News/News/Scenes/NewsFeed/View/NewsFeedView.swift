@@ -9,26 +9,18 @@ import SwiftUI
 
 struct NewsFeedView: View {
     
-    let news: [News] = [
-//        .init(title: "breaking news 1"),
-//        .init(title: "breaking news 2"),
-//        .init(title: "breaking news 3"),
-//        .init(title: "breaking news 4")
-    ]
-    
-    var newsViewData: [NewsViewData] {
-        news.map { NewsViewDataFactory.create(from: $0) }
-    }
+    @StateObject var viewModel: NewsFeedViewModel
     
     var body: some View {
-        List(newsViewData) { viewData in
-            NewsRowView(viewData: viewData)
+        NavigationView {
+            List {
+                ForEach($viewModel.newsViewData) { $viewData in
+                    NewsRowView(viewData: viewData)
+                }
+            }
+            .navigationTitle("News")
+            .navigationBarTitleDisplayMode(.large)
         }
-    }
-    
-    let viewModel: NewsFeedViewModel
-    init(viewModel: NewsFeedViewModel) {
-        self.viewModel = viewModel
     }
 }
 
